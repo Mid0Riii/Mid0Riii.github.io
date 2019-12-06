@@ -11,10 +11,10 @@
 
 
     <meta name="description" content="图的邻接矩阵存储及其实现邻接矩阵是常用的存储图的信息的方法，如下图所示   其中，边数组描述了图上的各个顶点之间的关系。此矩阵通常具有以下性质">
-<meta name="keywords" content="数据结构,算法,C语言,图论">
+<meta name="keywords" content="C语言,数据结构,算法,图论">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图的邻接矩阵存储、最小生成树普里姆算法以及最短路径的Dijkstra算法">
-<meta property="og:url" content="https:&#x2F;&#x2F;mid0riii.github.io&#x2F;2019&#x2F;12&#x2F;05&#x2F;prim-dijkstra&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;mid0riii.github.io&#x2F;prim-dijkstra.html">
 <meta property="og:site_name" content="Aldrich的博客">
 <meta property="og:description" content="图的邻接矩阵存储及其实现邻接矩阵是常用的存储图的信息的方法，如下图所示   其中，边数组描述了图上的各个顶点之间的关系。此矩阵通常具有以下性质">
 <meta property="og:locale" content="zh-CN">
@@ -35,7 +35,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-dark.css">
 
 
     
@@ -164,7 +164,7 @@
         </h1>
         <div class="content">
             <h2 id="图的邻接矩阵存储及其实现"><a href="#图的邻接矩阵存储及其实现" class="headerlink" title="图的邻接矩阵存储及其实现"></a>图的邻接矩阵存储及其实现</h2><p>邻接矩阵是常用的存储图的信息的方法，如下图所示</p>
-<img src="/2019/12/05/prim-dijkstra/%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5.jpg" class title="图的邻接矩阵">
+<img src="/prim-dijkstra/%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5.jpg" class title="图的邻接矩阵">
 
 <p>其中，边数组描述了图上的各个顶点之间的关系。此矩阵通常具有以下性质</p>
 <a id="more"></a> 
@@ -189,7 +189,7 @@
 <h2 id="图的最小生成树的普里姆算法"><a href="#图的最小生成树的普里姆算法" class="headerlink" title="图的最小生成树的普里姆算法"></a>图的最小生成树的普里姆算法</h2><blockquote>
 <p>一个有 n 个结点的连通图的生成树是原图的极小连通子图，且包含原图中的所有 n 个结点，并且有保持图连通的最少的边。 最小生成树可以用kruskal（克鲁斯卡尔）算法或prim（普里姆）算法求出。</p>
 </blockquote>
-<img src="/2019/12/05/prim-dijkstra/%E5%9B%BE%E7%9A%84%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91.jpg" class title="图的最小生成树">
+<img src="/prim-dijkstra/%E5%9B%BE%E7%9A%84%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91.jpg" class title="图的最小生成树">
 
 <p>简单来说，就是在把图的各个顶点连接起来的同时，保证路径的总权值最小。</p>
 <p>下面介绍图的普里姆算法</p>
@@ -200,7 +200,7 @@
 <li>重复上述步骤，直到最小生成树有n-1条边或者n个顶点为止。</li>
 </ol>
 <p>由于不断向集合u中加点，所以最小代价边必须同步更新；需要建立一个辅助数组tree[],用来维护集合v中每个顶点与集合u中最小代价边信息，：</p>
-<img src="/2019/12/05/prim-dijkstra/%E5%9B%BE%E7%9A%84%E6%99%AE%E9%87%8C%E5%A7%86%E7%AE%97%E6%B3%95.jpg" class title="图的普里姆算法">
+<img src="/prim-dijkstra/%E5%9B%BE%E7%9A%84%E6%99%AE%E9%87%8C%E5%A7%86%E7%AE%97%E6%B3%95.jpg" class title="图的普里姆算法">
 <p>以下为其算法实现</p>
 <figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//边集</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="hljs-keyword">int</span> beg;    <span class="hljs-comment">//起始顶点</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="hljs-keyword">int</span> en;     <span class="hljs-comment">//结束顶点</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="hljs-keyword">int</span> length; <span class="hljs-comment">//权值</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;edge;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">//普里姆算法</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">prim</span><span class="hljs-params">(Mgraph g,edge tree[M<span class="hljs-number">-1</span>])</span></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    edge x;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="hljs-keyword">int</span> d,<span class="hljs-built_in">min</span>,j,k,s,v;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="hljs-keyword">for</span>(v = <span class="hljs-number">1</span>;v&lt;=g.n<span class="hljs-number">-1</span>;v++)&#123;    <span class="hljs-comment">//初始化边集tree中的每一个元素i为起点为0，终点为v的边</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        tree[v<span class="hljs-number">-1</span>].beg = <span class="hljs-number">0</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        tree[v<span class="hljs-number">-1</span>].en = v;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        tree[v<span class="hljs-number">-1</span>].length = g.edges[<span class="hljs-number">0</span>][v];</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    <span class="hljs-keyword">for</span>(k = <span class="hljs-number">0</span>;k&lt;=g.n<span class="hljs-number">-3</span>;k++)&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        <span class="hljs-built_in">min</span> = tree[k].length;		<span class="hljs-comment">//初始化程序当前认为的最小边min</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        s = k;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">        <span class="hljs-keyword">for</span>(j = k+<span class="hljs-number">1</span>;j&lt;=g.n<span class="hljs-number">-2</span>;j++)&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">            <span class="hljs-keyword">if</span>(tree[j].length&lt;<span class="hljs-built_in">min</span>)&#123; <span class="hljs-comment">//如果当前边的权值小于目前最小值</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">                <span class="hljs-built_in">min</span> = tree[j].length;   <span class="hljs-comment">//令最小值等于当前边权值</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">                s = j;              <span class="hljs-comment">//令s等于最短边在tree中的索引</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">        v = tree[s].en;     <span class="hljs-comment">//取最短边的结束点为v</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">        x = tree[s];        <span class="hljs-comment">//交换tree中的第s条边和第k条边，使当前最小边加入tree</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">        tree[s] = tree[k];	</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">        tree[k] = x;				<span class="hljs-comment">//交换完毕后，此时tree数组中的前k个元素为已经求得的最短路径</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">        <span class="hljs-keyword">for</span>(j=k+<span class="hljs-number">1</span>;j&lt;=g.n<span class="hljs-number">-2</span>;j++)&#123;    <span class="hljs-comment">//由于v更换，更新两栖边信息，注意此处由k+1开始遍历tree</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">            d = g.edges[v][tree[j].en];	</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">            <span class="hljs-keyword">if</span>(d&lt;tree[j].length)&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">              	tree[j].beg = v;		<span class="hljs-comment">//设定tree[j]的起始点为v</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">                tree[j].length = d;	<span class="hljs-comment">//更新当前结束点v到tree[j]元素的距离</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line">  <span class="hljs-comment">//输出最小生成树</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line">    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n the minimun cost spanning tree is :\n"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line">    <span class="hljs-keyword">for</span>(j = <span class="hljs-number">0</span>;j&lt;=g.n<span class="hljs-number">-2</span>;j++)&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line">        <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n%c---%c %d\n"</span>,g.vex[tree[j].beg],g.vex[tree[j].en],tree[j].length);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">43</span></pre></td><td class="code"><pre><span class="line">    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"\n the root of it is %c\n"</span>,g.vex[<span class="hljs-number">0</span>]);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">44</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
 
@@ -244,13 +244,13 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2019/12/05/hello-world/">
-                <span class="level-item">Hello World</span>
-                <i class="level-item fas fa-chevron-right"></i>
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B%E7%9B%AE%E5%BD%95.html">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">C语言教程目录</span>
             </a>
         </div>
+        
         
     </div>
 </div>
@@ -268,7 +268,7 @@
     var gitalk = new Gitalk({
         clientID: 'e054fbb2637afdf03e37',
         clientSecret: 'c28f17ab2bfdfb11443ede4366b2279c6fcd75d6',
-        id: '1ab35b8bd4e005e43867177fa04f1464',
+        id: '6953ee54edfc8f7096f41b5792b43c55',
         repo: 'blog_comment',
         owner: 'Mid0Riii',
         admin: "Mid0Riii",
@@ -325,7 +325,7 @@
                     </p>
                     <a href="/archives">
                         <p class="title has-text-weight-normal">
-                            2
+                            3
                         </p>
                     </a>
                 </div>
@@ -337,7 +337,7 @@
                     </p>
                     <a href="/categories">
                         <p class="title has-text-weight-normal">
-                            1
+                            2
                         </p>
                     </a>
                 </div>
@@ -402,6 +402,14 @@
             <span class="level-end">
                 <span class="level-item tag">1</span>
             </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/%E6%95%99%E7%A8%8B/">
+            <span class="level-start">
+                <span class="level-item">教程</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
         </a></li>
             </ul>
         </div>
@@ -413,7 +421,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 10px;">C语言</a> <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="font-size: 10px;">图论</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a>
+        <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 20px;">C语言</a> <a href="/tags/%E5%9B%BE%E8%AE%BA/" style="font-size: 10px;">图论</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a>
     </div>
 </div>
     
@@ -464,7 +472,45 @@
         
         <article class="media">
             
-            <a href="/2019/12/05/prim-dijkstra/" class="media-left">
+            <a href="/C%E6%95%99%E7%A8%8B%E6%95%99%E7%A8%8B-%E5%87%BD%E6%95%B0%E9%83%A8%E5%88%86.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="C语言教程-函数部分">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-06T14:22:36.000Z">2019-12-06</time></div>
+                    <a href="/C%E6%95%99%E7%A8%8B%E6%95%99%E7%A8%8B-%E5%87%BD%E6%95%B0%E9%83%A8%E5%88%86.html" class="title has-link-black-ter is-size-6 has-text-weight-normal">C语言教程-函数部分</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%99%E7%A8%8B/">教程</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B%E7%9B%AE%E5%BD%95.html" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="C语言教程目录">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-06T14:15:45.000Z">2019-12-06</time></div>
+                    <a href="/C%E8%AF%AD%E8%A8%80%E6%95%99%E7%A8%8B%E7%9B%AE%E5%BD%95.html" class="title has-link-black-ter is-size-6 has-text-weight-normal">C语言教程目录</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/%E6%95%99%E7%A8%8B/">教程</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/prim-dijkstra.html" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/images/thumbnail.svg" alt="图的邻接矩阵存储、最小生成树普里姆算法以及最短路径的Dijkstra算法">
                 </p>
@@ -473,28 +519,9 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-05T14:56:11.000Z">2019-12-05</time></div>
-                    <a href="/2019/12/05/prim-dijkstra/" class="title has-link-black-ter is-size-6 has-text-weight-normal">图的邻接矩阵存储、最小生成树普里姆算法以及最短路径的Dijkstra算法</a>
+                    <a href="/prim-dijkstra.html" class="title has-link-black-ter is-size-6 has-text-weight-normal">图的邻接矩阵存储、最小生成树普里姆算法以及最短路径的Dijkstra算法</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2019/12/05/hello-world/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Hello World">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-05T11:18:19.841Z">2019-12-05</time></div>
-                    <a href="/2019/12/05/hello-world/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Hello World</a>
-                    <p class="is-size-7 is-uppercase">
-                        
                     </p>
                 </div>
             </div>
@@ -517,7 +544,7 @@
                     <span class="level-item">十二月 2019</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -538,7 +565,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/C%E8%AF%AD%E8%A8%80/">
                         <span class="tag">C语言</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
